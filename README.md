@@ -70,7 +70,7 @@ s.close()
 
 ## OUPUT
 
-![Uploading image.png…]()
+<img width="1473" height="203" alt="Screenshot 2026-11-18 102601" src="https://github.com/user-attachments/assets/98a99507-7f07-43a6-90db-308140334cc7" />
 
 
 ## RESULT

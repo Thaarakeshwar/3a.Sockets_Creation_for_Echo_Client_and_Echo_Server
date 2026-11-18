@@ -21,30 +21,57 @@ Sockets Links.
 
 server.py
 ```c
-import socket 
-s=socket.socket() 
-s.connect(('localhost',8000)) 
-while True: 
-    msg=input("Client > ") 
-    s.send(msg.encode()) 
-    print("Server > ",s.recv(1024).decode())
+import socket
+
+s = socket.socket()
+s.bind(('localhost', 8000))
+s.listen(5)
+print("Server listening on port 8000...")
+
+c, addr = s.accept()
+print(f"Connected to {addr}")
+
+while True:
+    client_message = c.recv(1024).decode()
+    if not client_message or client_message.lower() == 'exit':
+        print("Client disconnected.")
+        break
+    print(f"Client: {client_message}")
+    reply = input("Server (you): ")
+    c.send(reply.encode())
+    if reply.lower() == 'exit':
+        break
+
+c.close()
+s.close()
 ```
 
 client.py
 
 ```c
-import socket 
-s=socket.socket() 
-s.bind(('localhost',8000)) 
-s.listen(5) 
-c,addr=s.accept() 
-while True: 
-    ClientMessage=c.recv(1024).decode() 
-    c.send(ClientMessage.encode())
+import socket
+
+s = socket.socket()
+s.connect(('localhost', 8000))
+
+while True:
+    message = input("Client (you): ")
+    s.send(message.encode())
+    if message.lower() == 'exit':
+        break
+    server_reply = s.recv(1024).decode()
+    if not server_reply or server_reply.lower() == 'exit':
+        print("Server disconnected.")
+        break
+    print(f"Server: {server_reply}")
+
+s.close()
 ```
 
 ## OUPUT
-<img width="1489" height="350" alt="image" src="https://github.com/user-attachments/assets/13e36502-6471-4fbe-99d9-470de5c80084" />
+
+![Uploading image.png…]()
+
 
 ## RESULT
 
